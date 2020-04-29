@@ -14,7 +14,7 @@ public class Database {
 		String jdbc_url = "jdbc:mysql://127.0.0.1:3307/databasetest?serverTimezone=UTC";
 		try {
 		Class.forName(jdbc_driver).newInstance();		// DB 로드
-		Connection con = DriverManager.getConnection(jdbc_url, "root", "qhdlsrh6");		// DB와 연결
+		Connection con = DriverManager.getConnection(jdbc_url, "root", "비밀번호");		// DB와 연결
 		
 		Statement st = con.createStatement();
 		String db = "CREATE TABLE addressbook("
@@ -27,7 +27,7 @@ public class Database {
 
 		st1.setInt(1, 201455035);
 		st1.setString(2, "이유신");
-		st1.setString(3, "010-5561-3908");
+		st1.setString(3, "010-2222-1111");
 		st1.setString(4, "fjrvldi6@naver.com");
 		st1.setString(5, "서울특별시 송파구");
 		st1.executeUpdate();
