@@ -29,7 +29,7 @@ public class Database {
 		st1.setString(2, "이유신");
 		st1.setString(3, "010-2222-1111");
 		st1.setString(4, "fjrvldi6@naver.com");
-		st1.setString(5, "서울특별시 송파구");
+		st1.setString(5, "송파구");
 		st1.executeUpdate();
 		
 		st1.setInt(1, 201555001);
@@ -42,13 +42,28 @@ public class Database {
 		st1.setInt(1, 201555002);
 		st1.setString(2, "임길주");
 		st1.setString(3, "010-0000-1111");
-		st1.setString(4, "dlarlfwn@hs.ac.kr");
+		st1.setString(4, "dlarlfwn@gmail.com");
 		st1.setString(5, "일산");
+		st1.executeUpdate();
+		
+		st1.setInt(1, 201955001);
+		st1.setString(2, "최문기");
+		st1.setString(3, "010-5555-1111");
+		st1.setString(4, "chlansrl@daum.net");
+		st1.setString(5, "부천");
+		st1.executeUpdate();
+		
+		st1.setInt(1, 202055007);
+		st1.setString(2, "김각윤");
+		st1.setString(3, "010-9999-2222");
+		st1.setString(4, "rlarkrdbs@hs.ac.kr");
+		st1.setString(5, "영등포");
 		st1.executeUpdate();
 		
 		String sql = "SELECT * FROM databasetest.addressbook";
 		ResultSet rs = st.executeQuery(sql);
 		
+		System.out.println("5개 SET 데이터 출력");
 		while( rs.next() ) {	// 데이터 입력 후 출력
 			int id = rs.getInt("id");
 			String name = rs.getString("name");
@@ -67,7 +82,7 @@ public class Database {
 		System.out.println();
 		System.out.println();
 
-		
+		System.out.println("도메인 변경 후 데이터 출력");
 		while( rs.next() ) {	// 도메인 변경 후 출력
 			int id = rs.getInt("id");
 			String name = rs.getString("name");
@@ -102,7 +117,8 @@ public class Database {
 		
 		rs = st.executeQuery(sql);
 		
-		while( rs.next() ) {	// 도메인 변경 후 출력
+		System.out.println("하위 SET 2개 삭제 후 데이터 출력");
+		while( rs.next() ) {	// 하위 SET 2개 삭제 후 출력
 			int id = rs.getInt("id");
 			String name = rs.getString("name");
 			String tel = rs.getString("tel");
