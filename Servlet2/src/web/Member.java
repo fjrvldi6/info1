@@ -67,7 +67,7 @@ public class Member extends HttpServlet {
 			
 			st.executeUpdate(db);
 			
-			//	여기까지 주석처리 하시면	
+			//	여기까지 주석처리 하시면 됩니다.
 			
 			PreparedStatement st1;
 			
