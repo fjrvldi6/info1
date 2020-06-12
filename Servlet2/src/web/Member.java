@@ -52,22 +52,22 @@ public class Member extends HttpServlet {
 		
 		try {
 			
-			Class.forName(jdbc_driver).newInstance();		// DB ·Îµå
-			Connection con = DriverManager.getConnection(jdbc_url, "root", "ºñ¹Ğ¹øÈ£");		// DB¿Í ¿¬°á
+			Class.forName(jdbc_driver).newInstance();		// DB ë¡œë“œ
+			Connection con = DriverManager.getConnection(jdbc_url, "root", "ë¹„ë°€ë²ˆí˜¸");		// DBì™€ ì—°ê²°
 			
 			Statement st = con.createStatement();
 
 			
 			
-			//	Å×ÀÌºí »ı¼º ÄÚµå (Å×ÀÌºí ¿©ºÎ¿¡ µû¶ó¼­ ÁÖ¼® Ã³¸®)
+			//	í…Œì´ë¸” ìƒì„± ì½”ë“œ (í…Œì´ë¸” ì—¬ë¶€ì— ë”°ë¼ì„œ ì£¼ì„ ì²˜ë¦¬)
 			
-			/*
 			String db = "CREATE TABLE memberform("
 					+ "id VARCHAR(45) NOT NULL PRIMARY KEY, password VARCHAR(45) NOT NULL, name VARCHAR(45) NOT NULL, tel VARCHAR(45) NOT NULL, "
 					+ "email VARCHAR(45) NOT NULL, school VARCHAR(45) NOT NULL, gender VARCHAR(60) NOT NULL, season VARCHAR(60) NOT NULL, introduce VARCHAR(60) NOT NULL)";
 			
 			st.executeUpdate(db);
-			*/
+			
+			//	ì—¬ê¸°ê¹Œì§€ ì£¼ì„ì²˜ë¦¬ í•˜ì‹œë©´	
 			
 			PreparedStatement st1;
 			
@@ -77,15 +77,15 @@ public class Member extends HttpServlet {
 			
 			
 			
-			if( div.equals("Àü¼Û") ) {	// Àü¼Û ¹öÆ° ´­·¶À» ¶§
+			if( div.equals("ì „ì†¡") ) {	// ì „ì†¡ ë²„íŠ¼ ëˆŒë €ì„ ë•Œ
 				
-				while( rs.next() ) {	// µ¥ÀÌÅÍº£ÀÌ½º¿¡ ÀúÀåµÈ °ª °¡Á®¿Í¼­ °°Àº °ªÀÌ ÀÖ´ÂÁö È®ÀÎ
+				while( rs.next() ) {	// ë°ì´í„°ë² ì´ìŠ¤ì— ì €ì¥ëœ ê°’ ê°€ì ¸ì™€ì„œ ê°™ì€ ê°’ì´ ìˆëŠ”ì§€ í™•ì¸
 					String con_id = rs.getString("id");
 					String con_name = rs.getString("name");
 					String con_pass = rs.getString("password");
 					
 					if( con_id.equals(id) && con_name.equals(name) ) {
-						if( con_pass.equals(password) ) {	//¾ÆÀÌµğ¿Í ÀÌ¸§ÀÌ °°À¸¸ç, ºñ¹Ğ¹øÈ£µµ °°À» ¶§ µ¥ÀÌÅÍ¸¦ ¾÷µ¥ÀÌÆ®
+						if( con_pass.equals(password) ) {	//ì•„ì´ë””ì™€ ì´ë¦„ì´ ê°™ìœ¼ë©°, ë¹„ë°€ë²ˆí˜¸ë„ ê°™ì„ ë•Œ ë°ì´í„°ë¥¼ ì—…ë°ì´íŠ¸
 
 							flag = 1;
 							
@@ -106,11 +106,11 @@ public class Member extends HttpServlet {
 							st1.setString(12, name);
 							st1.executeUpdate();
 							
-							System.out.println("flag°¡ 1ÀÇ ¾÷µ¥ÀÌÆ®°¡ µé¾î°¨.");
+							System.out.println("flagê°€ 1ì˜ ì—…ë°ì´íŠ¸ê°€ ë“¤ì–´ê°.");
 							
 							break;
 						}
-						else {	// ¾ÆÀÌµğ¿Í ÀÌ¸§ÀÌ °°Áö¸¸, ºñ¹Ğ¹øÈ£°¡ Æ²·ÈÀ» ¶§
+						else {	// ì•„ì´ë””ì™€ ì´ë¦„ì´ ê°™ì§€ë§Œ, ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ì„ ë•Œ
 							flag = 2;
 							break;
 						}
@@ -119,7 +119,7 @@ public class Member extends HttpServlet {
 				}
 				
 				
-				if( flag == 0 ) {	// ¾ÆÀÌµğ¿Í ÀÌ¸§ÀÌ Ã³À½ µî·ÏµÈ °ªÀÏ ¶§
+				if( flag == 0 ) {	// ì•„ì´ë””ì™€ ì´ë¦„ì´ ì²˜ìŒ ë“±ë¡ëœ ê°’ì¼ ë•Œ
 					
 					st1 = con.prepareStatement("INSERT INTO databasetest.memberform VALUES(?,?,?,?,?,?,?,?,?)");
 
@@ -136,7 +136,7 @@ public class Member extends HttpServlet {
 				}
 				
 			}
-			else if( div.equals("DB º¸±â") ) {	// DB º¸±â ¹öÆ°À» ´­·¶À» ¶§
+			else if( div.equals("DB ë³´ê¸°") ) {	// DB ë³´ê¸° ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
 				flag = 3;
 			
 				while( rs.next() ) {
@@ -153,7 +153,7 @@ public class Member extends HttpServlet {
 				}
 				
 			}
-			else if( div.equals("DB »èÁ¦") ) {	// DB »èÁ¦ ¹öÆ°À» ´­·¶À» ¶§
+			else if( div.equals("DB ì‚­ì œ") ) {	// DB ì‚­ì œ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
 				flag = 4;
 				st1 = con.prepareStatement("DELETE FROM databasetest.memberform");
 				st1.executeUpdate();
@@ -170,41 +170,41 @@ public class Member extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		out.print("<html><head><title>get</title></head>");
 		out.print("<body>");
-		out.print("<h1>GET ¹æ½ÄÀ¸·Î ¿äÃ»µÇ¾ú½À´Ï´Ù</h1>");
+		out.print("<h1>GET ë°©ì‹ìœ¼ë¡œ ìš”ì²­ë˜ì—ˆìŠµë‹ˆë‹¤</h1>");
 		
 		if( flag == 2 ) {
-			out.print("ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù.");
+			out.print("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤.");
 		}
 		else if( flag == 4 ) {
-			out.print("DB Á¤º¸°¡ ¸ğµÎ »èÁ¦µÇ¾ú½À´Ï´Ù.");
+			out.print("DB ì •ë³´ê°€ ëª¨ë‘ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.");
 		}
 		else if( flag == 3 ) {			
 			
 			for( int i = 0; i < db_id.size(); i++) {
-				out.print("< " + (i+1) + " ¹øÂ° >     ¾ÆÀÌµğ : " + db_id.get(i) + "  /   ÀÌ¸§ : " + db_name.get(i) + "  /   ÇÚµåÆù¹øÈ£ : " + db_tel.get(i) + "  /   ÀÌ¸ŞÀÏ : " + db_email.get(i) 
-				+ "  /   ÇĞºÎ : " + db_school.get(i) + "  /   ¼ºº° : " + db_gender.get(i) + "  /   »ıÀÏ : " + db_season.get(i) + "  /   ¼Ò°³ : " + db_introduce.get(i) + " <br><br>");
+				out.print("< " + (i+1) + " ë²ˆì§¸ >     ì•„ì´ë”” : " + db_id.get(i) + "  /   ì´ë¦„ : " + db_name.get(i) + "  /   í•¸ë“œí°ë²ˆí˜¸ : " + db_tel.get(i) + "  /   ì´ë©”ì¼ : " + db_email.get(i) 
+				+ "  /   í•™ë¶€ : " + db_school.get(i) + "  /   ì„±ë³„ : " + db_gender.get(i) + "  /   ìƒì¼ : " + db_season.get(i) + "  /   ì†Œê°œ : " + db_introduce.get(i) + " <br><br>");
 			}
 			
 		}
 		else {
-			out.print("¾ÆÀÌµğ : " + id + "<br/>");
-			out.print("ÀÌ¸§ : " + name + "<br/>");
-			out.print("ÇÚµåÆù¹øÈ£ : " + tel + "<br/>");
-			out.print("ÀÌ¸ŞÀÏ : " + email + "<br/>");
-			out.print("ÇĞºÎ : ");
+			out.print("ì•„ì´ë”” : " + id + "<br/>");
+			out.print("ì´ë¦„ : " + name + "<br/>");
+			out.print("í•¸ë“œí°ë²ˆí˜¸ : " + tel + "<br/>");
+			out.print("ì´ë©”ì¼ : " + email + "<br/>");
+			out.print("í•™ë¶€ : ");
 			for (int i = 0; i < depts.length; i++) {
 				out.print(depts[i] + " ");
 			}
 			out.print("<br/>");
-			out.print("¼ºº° : " + gender + "<br/>");
-			out.print("»ıÀÏ : " + birth + "<br/>");
-			out.print("¼Ò°³ : " + intro + "<br/>");
+			out.print("ì„±ë³„ : " + gender + "<br/>");
+			out.print("ìƒì¼ : " + birth + "<br/>");
+			out.print("ì†Œê°œ : " + intro + "<br/>");
 			
 			if( flag == 0 ) {
-				out.print("<br/><br/> ÀúÀå¿¡ ¼º°øÇß½À´Ï´Ù. <br/><br/>");
+				out.print("<br/><br/> ì €ì¥ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤. <br/><br/>");
 			}
 			else if( flag == 1 ) {
-				out.print("<br/><br/> ¾÷µ¥ÀÌÆ®¿¡ ¼º°øÇß½À´Ï´Ù. <br/><br/>");
+				out.print("<br/><br/> ì—…ë°ì´íŠ¸ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤. <br/><br/>");
 			}
 		}
 
