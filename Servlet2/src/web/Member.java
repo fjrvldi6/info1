@@ -19,15 +19,15 @@ import java.util.List;
 
 @WebServlet("/parse")
 public class Member extends HttpServlet {
-
-
+	
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+			
 		String jdbc_driver = "com.mysql.cj.jdbc.Driver";
 		String jdbc_url = "jdbc:mysql://localhost:3307/databasetest?serverTimezone=UTC";		
-
+		
 		int flag = 0;
 		String div = req.getParameter("div");
 		String id = req.getParameter("id");
@@ -49,18 +49,18 @@ public class Member extends HttpServlet {
 		List<String> db_season = new ArrayList<>();
 		List<String> db_introduce = new ArrayList<>();
 
-
+		
 		try {
-
-			Class.forName(jdbc_driver).newInstance();		// DB ë¡œë“œ
-			Connection con = DriverManager.getConnection(jdbc_url, "root", "ë¹„ë°€ë²ˆí˜¸");		// DBì™€ ì—°ê²°
-
+			
+			Class.forName(jdbc_driver).newInstance();		// DB ·Îµå
+			Connection con = DriverManager.getConnection(jdbc_url, "root", "ºñ¹Ğ¹øÈ£");		// DB¿Í ¿¬°á
+			
 			Statement st = con.createStatement();
 
-
-
-			//	í…Œì´ë¸” ìƒì„± ì½”ë“œ (í…Œì´ë¸” ì—¬ë¶€ì— ë”°ë¼ì„œ ì£¼ì„ ì²˜ë¦¬)
-
+			
+			
+			//	Å×ÀÌºí »ı¼º ÄÚµå (Å×ÀÌºí ¿©ºÎ¿¡ µû¶ó¼­ ÁÖ¼® Ã³¸®)
+			
 			/*
 			String db = "CREATE TABLE memberform("
 					+ "id VARCHAR(45) NOT NULL PRIMARY KEY, password VARCHAR(45) NOT NULL, name VARCHAR(45) NOT NULL, tel VARCHAR(45) NOT NULL, "
@@ -68,30 +68,30 @@ public class Member extends HttpServlet {
 			
 			st.executeUpdate(db);
 			*/
-
+			
 			PreparedStatement st1;
-
-
+			
+			
 			String sql = "SELECT * FROM databasetest.memberform";
 			ResultSet rs = st.executeQuery(sql);
-
-
-
-			if( div.equals("ì „ì†¡") ) {	// ì „ì†¡ ë²„íŠ¼ ëˆŒë €ì„ ë•Œ
-
-				while( rs.next() ) {	// ë°ì´í„°ë² ì´ìŠ¤ì— ì €ì¥ëœ ê°’ ê°€ì ¸ì™€ì„œ ê°™ì€ ê°’ì´ ìˆëŠ”ì§€ í™•ì¸
+			
+			
+			
+			if( div.equals("Àü¼Û") ) {	// Àü¼Û ¹öÆ° ´­·¶À» ¶§
+				
+				while( rs.next() ) {	// µ¥ÀÌÅÍº£ÀÌ½º¿¡ ÀúÀåµÈ °ª °¡Á®¿Í¼­ °°Àº °ªÀÌ ÀÖ´ÂÁö È®ÀÎ
 					String con_id = rs.getString("id");
 					String con_name = rs.getString("name");
 					String con_pass = rs.getString("password");
-
+					
 					if( con_id.equals(id) && con_name.equals(name) ) {
-						if( con_pass.equals(password) ) {	//ì•„ì´ë””ì™€ ì´ë¦„ì´ ê°™ìœ¼ë©°, ë¹„ë°€ë²ˆí˜¸ë„ ê°™ì„ ë•Œ ë°ì´í„°ë¥¼ ì—…ë°ì´íŠ¸
+						if( con_pass.equals(password) ) {	//¾ÆÀÌµğ¿Í ÀÌ¸§ÀÌ °°À¸¸ç, ºñ¹Ğ¹øÈ£µµ °°À» ¶§ µ¥ÀÌÅÍ¸¦ ¾÷µ¥ÀÌÆ®
 
 							flag = 1;
-
+							
 							st1 = con.prepareStatement("UPDATE databasetest.memberform SET id=?, password=?, name=?, tel=?, email=?, "
 							+" school=?, gender=?, season=?, introduce=? WHERE id=? AND password=? AND name=? ");
-
+							
 							st1.setString(1, id);
 							st1.setString(2, password);
 							st1.setString(3, name);
@@ -105,22 +105,22 @@ public class Member extends HttpServlet {
 							st1.setString(11, password);
 							st1.setString(12, name);
 							st1.executeUpdate();
-
-							System.out.println("flagê°€ 1ì˜ ì—…ë°ì´íŠ¸ê°€ ë“¤ì–´ê°.");
-
+							
+							System.out.println("flag°¡ 1ÀÇ ¾÷µ¥ÀÌÆ®°¡ µé¾î°¨.");
+							
 							break;
 						}
-						else {	// ì•„ì´ë””ì™€ ì´ë¦„ì´ ê°™ì§€ë§Œ, ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ì„ ë•Œ
+						else {	// ¾ÆÀÌµğ¿Í ÀÌ¸§ÀÌ °°Áö¸¸, ºñ¹Ğ¹øÈ£°¡ Æ²·ÈÀ» ¶§
 							flag = 2;
 							break;
 						}
 					}
 
 				}
-
-
-				if( flag == 0 ) {	// ì•„ì´ë””ì™€ ì´ë¦„ì´ ì²˜ìŒ ë“±ë¡ëœ ê°’ì¼ ë•Œ
-
+				
+				
+				if( flag == 0 ) {	// ¾ÆÀÌµğ¿Í ÀÌ¸§ÀÌ Ã³À½ µî·ÏµÈ °ªÀÏ ¶§
+					
 					st1 = con.prepareStatement("INSERT INTO databasetest.memberform VALUES(?,?,?,?,?,?,?,?,?)");
 
 					st1.setString(1, id);
@@ -134,13 +134,13 @@ public class Member extends HttpServlet {
 					st1.setString(9, intro);
 					st1.executeUpdate();
 				}
-
+				
 			}
-			else if( div.equals("DB ë³´ê¸°") ) {	// DB ë³´ê¸° ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
+			else if( div.equals("DB º¸±â") ) {	// DB º¸±â ¹öÆ°À» ´­·¶À» ¶§
 				flag = 3;
-
+			
 				while( rs.next() ) {
-
+					
 					db_id.add(rs.getString("id"));
 					db_name.add(rs.getString("name"));
 					db_tel.add(rs.getString("tel"));
@@ -151,13 +151,13 @@ public class Member extends HttpServlet {
 					db_introduce.add(rs.getString("introduce"));
 
 				}
-
+				
 			}
-			else if( div.equals("DB ì‚­ì œ") ) {	// DB ì‚­ì œ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
+			else if( div.equals("DB »èÁ¦") ) {	// DB »èÁ¦ ¹öÆ°À» ´­·¶À» ¶§
 				flag = 4;
 				st1 = con.prepareStatement("DELETE FROM databasetest.memberform");
 				st1.executeUpdate();
-
+				
 			}
 
 		}
@@ -166,50 +166,50 @@ public class Member extends HttpServlet {
 		}
 
 		resp.setContentType("text/html;charset=UTF-8");
-
+		
 		PrintWriter out = resp.getWriter();
 		out.print("<html><head><title>get</title></head>");
 		out.print("<body>");
-		out.print("<h1>GET ë°©ì‹ìœ¼ë¡œ ìš”ì²­ë˜ì—ˆìŠµë‹ˆë‹¤</h1>");
-
+		out.print("<h1>GET ¹æ½ÄÀ¸·Î ¿äÃ»µÇ¾ú½À´Ï´Ù</h1>");
+		
 		if( flag == 2 ) {
-			out.print("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤.");
+			out.print("ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù.");
 		}
 		else if( flag == 4 ) {
-			out.print("DB ì •ë³´ê°€ ëª¨ë‘ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.");
+			out.print("DB Á¤º¸°¡ ¸ğµÎ »èÁ¦µÇ¾ú½À´Ï´Ù.");
 		}
 		else if( flag == 3 ) {			
-
+			
 			for( int i = 0; i < db_id.size(); i++) {
-				out.print("< " + (i+1) + " ë²ˆì§¸ >     ì•„ì´ë”” : " + db_id.get(i) + "  /   ì´ë¦„ : " + db_name.get(i) + "  /   í•¸ë“œí°ë²ˆí˜¸ : " + db_tel.get(i) + "  /   ì´ë©”ì¼ : " + db_email.get(i) 
-				+ "  /   í•™ë¶€ : " + db_school.get(i) + "  /   ì„±ë³„ : " + db_gender.get(i) + "  /   ìƒì¼ : " + db_season.get(i) + "  /   ì†Œê°œ : " + db_introduce.get(i) + " <br><br>");
+				out.print("< " + (i+1) + " ¹øÂ° >     ¾ÆÀÌµğ : " + db_id.get(i) + "  /   ÀÌ¸§ : " + db_name.get(i) + "  /   ÇÚµåÆù¹øÈ£ : " + db_tel.get(i) + "  /   ÀÌ¸ŞÀÏ : " + db_email.get(i) 
+				+ "  /   ÇĞºÎ : " + db_school.get(i) + "  /   ¼ºº° : " + db_gender.get(i) + "  /   »ıÀÏ : " + db_season.get(i) + "  /   ¼Ò°³ : " + db_introduce.get(i) + " <br><br>");
 			}
-
+			
 		}
 		else {
-			out.print("ì•„ì´ë”” : " + id + "<br/>");
-			out.print("ì´ë¦„ : " + name + "<br/>");
-			out.print("í•¸ë“œí°ë²ˆí˜¸ : " + tel + "<br/>");
-			out.print("ì´ë©”ì¼ : " + email + "<br/>");
-			out.print("í•™ë¶€ : ");
+			out.print("¾ÆÀÌµğ : " + id + "<br/>");
+			out.print("ÀÌ¸§ : " + name + "<br/>");
+			out.print("ÇÚµåÆù¹øÈ£ : " + tel + "<br/>");
+			out.print("ÀÌ¸ŞÀÏ : " + email + "<br/>");
+			out.print("ÇĞºÎ : ");
 			for (int i = 0; i < depts.length; i++) {
 				out.print(depts[i] + " ");
 			}
 			out.print("<br/>");
-			out.print("ì„±ë³„ : " + gender + "<br/>");
-			out.print("ìƒì¼ : " + birth + "<br/>");
-			out.print("ì†Œê°œ : " + intro + "<br/>");
-
+			out.print("¼ºº° : " + gender + "<br/>");
+			out.print("»ıÀÏ : " + birth + "<br/>");
+			out.print("¼Ò°³ : " + intro + "<br/>");
+			
 			if( flag == 0 ) {
-				out.print("<br/><br/> ì €ì¥ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤. <br/><br/>");
+				out.print("<br/><br/> ÀúÀå¿¡ ¼º°øÇß½À´Ï´Ù. <br/><br/>");
 			}
 			else if( flag == 1 ) {
-				out.print("<br/><br/> ì—…ë°ì´íŠ¸ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤. <br/><br/>");
+				out.print("<br/><br/> ¾÷µ¥ÀÌÆ®¿¡ ¼º°øÇß½À´Ï´Ù. <br/><br/>");
 			}
 		}
 
 		out.println("</body></html>");
 		out.close();
-
+		
 	}
 }
